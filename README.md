@@ -287,11 +287,58 @@ On build, your CSS will be bundled into the `main.js` file. Honestly, packing th
 
 ----
 
+## CSS Referenced Assets
+
+We're on our way through the swamp, but not out of the muck just yet. The work we've just done will handle our CSS code, but _will not_ handle any of the assets referenced in our CSS, including image files, fonts, etc. If we'd like to pack these items along, there's more yet to do.
+
+Create an `images` folder inside of `src`. This is where you'll drop image files.
+
+```sh
+src
+  images
+```
+
+And we'll need two Webpack loaders, `file-loader` and `url-loader`.
+
+```sh
+$ npm install --save-dev file-loader url-loader
+```
+
+In your configuration file, update your module rules to include the below rule for images files, following the existing CSS rule.
+
+**webpack.config.js**  
+```js
+...
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: '[path]/[name].[ext]'
+            }
+          }
+        ]
+      }
+
+    ] // rules
+```
+
+The loader `url-loader` will inline images smaller than the set limit as base64 strings; images larger than the limit will fall back to `file-loader` by default, and will be moved to `dist` folder in accordance with the 'name' option. As written above, we keep the existing file name, and drop the images into `dist/images`.
+
+----
+
 ## Final Code
 
 ```sh
 npm init
-npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
 ```
 
 ```sh
@@ -343,9 +390,22 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: '[path]/[name].[ext]'
+            }
+          }
+        ]
       }
 
-    ] // rules
+] // rules
   }, // module
 
   plugins: [
@@ -358,4 +418,5 @@ module.exports = {
 
   ] // plugins
 
-};```
+};
+```

@@ -20,8 +20,26 @@ module.exports = {
         }
       },
 
-    ] // rules
-  } // module
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: '[path]/[name].[ext]'
+            }
+          }
+        ]
+      }
+
+] // rules
+  }, // module
 
   plugins: [
 
