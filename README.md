@@ -12,9 +12,13 @@ If you're coming along, then strap on your Webpack and let's start walking.
 
 ----
 
-At time of writing, Webpack 4.12.0 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
+## Usage
 
-If you're here for the first time, I strongly advise reading the entire article. Repeat visitors might like to jump to the final code.
+For manual setup, follow along with the article, or copy-and-paste the final code from the end. Else, fork and clone this repo, then `npm install` as is typical.
+
+If you're here for the first time, I strongly advise reading the entire article to better understand what's here.
+
+At time of writing, Webpack 4.12.0 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
 
 ----
 
