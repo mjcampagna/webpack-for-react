@@ -12,7 +12,7 @@ If you're coming along, then strap on your Webpack and let's start walking.
 
 ----
 
-At time of writing, Webpack 4.8.3 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
+At time of writing, Webpack 4.12.0 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
 
 If you're here for the first time, I strongly advise reading the entire article. Repeat visitors might like to jump to the final code.
 
