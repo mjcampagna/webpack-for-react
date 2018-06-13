@@ -1,6 +1,6 @@
 # Webpack
 
-I've read a lot of articles about Webpack. The best of them are dated, now irrelevant. The rest of them are simply insane. Meanwhile, Webpack 4 claims to run with zero configuration! And while that's not untrue, zero configuration won't get you very far.
+I've read a lot of articles about Webpack. The best of them are dated, now irrelevant. The rest of them are simply insane.
 
 I am recently come to Webpack, and it frustrated me at first. In most reading, the author steers one into brambles, then gives band-aids to dress the wounds. There's a thing called tech debt, and the answer to most problems is not to install still more npm modules; better to avoid the pitfalls in the first place.
 
@@ -81,6 +81,29 @@ $ npm run dev
 
 ----
 
+## Creating the Configuration File
+
+Webpack 4 boldly claims to run with zero configuration. While that's not untrue, zero configuration won't get you very far. To get Webpack doing more of the things we want, we definitely want a configuration file. We might think about the configuration file as our map, a record of where we've been, and a guide for where we next expect to go.
+
+In the project root, create a new file, `webpack.config.js`, with these contents:
+
+**webpack.config.js**  
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
+  },
+};
+```
+
+As written, this essentially mimics Webpack's default behavior. We'll sketch in more of the terrain as we travel forward. For details on what's here, see Webpack documentation for [Entry](https://webpack.js.org/concepts/#entry) and[Output](https://webpack.js.org/concepts/#output). These are core concepts you'll want to understand.
+
+----
+
 ## Final Code
 
 ```sh
@@ -93,16 +116,32 @@ node_modules
 src
   index.html
   index.js
+  styling.css
 package-lock.json
 package.json
 ```
 
 **package.json**
 ```js
+...
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "del-cli dist -f",
     "dev": "webpack --mode=development --watch",
     "build": "npm run prebuild -s && webpack --mode=production -s"
   },
+...
+```
+
+**webpack.config.js**  
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
+  },
+};
 ```
