@@ -38,8 +38,8 @@ Within the project folder, create a `src` folder, containing two files, `index.h
 node_modules
 src
   index.html
-	index.js
-	styling.css
+  index.js
+  styling.css
 package-lock.json
 package.json
 ```
@@ -92,7 +92,7 @@ npm install --save-dev webpack webpack-cli del-cli
 node_modules
 src
   index.html
-	index.js
+  index.js
 package-lock.json
 package.json
 ```
