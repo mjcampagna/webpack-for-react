@@ -319,7 +319,7 @@ In your configuration file, update your module rules to include the below rule f
       },
 
       {
-        test: /\.(png|jpg|jpeg|gif)$/,
+        test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
         use: [
           {
             loader: 'url-loader',
