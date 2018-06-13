@@ -4,7 +4,7 @@ I've read a lot of articles about Webpack. The best of them are dated, now irrel
 
 I am recently come to Webpack, and it frustrated me at first. In most reading, the author steers one into brambles, then gives band-aids to dress the wounds. There's a thing called tech debt, and the answer to most problems is not to install still more npm modules; better to avoid the pitfalls in the first place.
 
-And that's the point of this. Herein, I do not endeavor to be comprehensive. Rather, I will plot a sane introduction to Webpack, building a base configuration that leans heavily on first-party resources. As little bloat as I can manage, nothing nonessential, and reaching only for third-parties when I absolutely must.
+And that's the point of this. Herein, I do not endeavor to be comprehensive. Rather, I will plot a sane introduction to Webpack, building a base configuration that leans heavily on resources from Webpack's own website.
 
 First and foremost, I write this for myself, a living document that I will update as my needs and my understanding continue to evolve. If others benefit from it as well, then all the better. 
 
@@ -32,14 +32,14 @@ Install Webpack and its command-line interface as development dependencies with:
 $ npm install --save-dev webpack webpack-cli 
 ```
 
-Within the project folder, create a `src` folder, containing two files, `index.html`, `index.js` and `styling.css`. At this point, your folder should look like this:
+Within the project folder, create a `src` folder, containing two files, `index.html`, `index.js` and `style.css`. At this point, your folder should look like this:
 
 ```sh
 node_modules
 src
   index.html
   index.js
-  styling.css
+  style.css
 package-lock.json
 package.json
 ```
@@ -100,7 +100,190 @@ module.exports = {
 };
 ```
 
-As written, this essentially mimics Webpack's default behavior. We'll sketch in more of the terrain as we travel forward. For details on what's here, see Webpack documentation for [Entry](https://webpack.js.org/concepts/#entry) and[Output](https://webpack.js.org/concepts/#output). These are core concepts you'll want to understand.
+As written, this essentially mimics Webpack's default behavior. We'll sketch in more of the terrain as we travel forward. For details on what's here, see Webpack documentation for [Entry](https://webpack.js.org/concepts/#entry) and [Output](https://webpack.js.org/concepts/#output). These are core concepts you'll want to understand.
+
+----
+
+## HTML + JS
+
+Our configuration is coming along, so let's revisit the empty `index.html` file we created above. Open it up and paste in the following.
+
+**src/index.html**  
+```html
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+  </head>
+  <body>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+Note the strange enclosure in the HTML `<title>` element. We'll be adding the `HtmlWebpackPlugin` to our configuration file momentarily, and this allows us to set the title via Webpack.
+
+To install the `HtmlWebpackPlugin`, run:
+
+```sh
+$ npm install --save-dev html-webpack-plugin
+```
+
+In our configuration file, we must require it at the top, then add the `plugins` configuration.
+
+**webpack.config.js**  
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
+  },
+  
+  plugins: [
+
+    new HtmlWebpackPlugin({
+      title: 'My App',
+      template: 'src/index.html',
+      inject: false
+    })
+
+  ] // plugins
+
+};
+```
+
+Again, note the `title` option in configuring `HtmlWebpackPlugin`; here we set the title that will show up in our HTML file.
+
+And now the JavaScript. Because it's 2018 and the newer ECMAScript is all the rage, you probably want to include Babel, helpful for teaching the new slang to fogey browsers.
+
+Install the following with npm.
+
+```sh
+$ npm install --save-dev babel-core babel-loader babel-preset-env
+```
+
+To use these, we'll need to grow our configuration file to include `modules` configuration.
+
+**webpack.config.js**  
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
+  },
+  
+  module: {
+    rules: [
+
+      { 
+        test: /\.jsx?$/, 
+        loader: 'babel-loader',
+        include: /src/,
+        options: {
+          presets: ['env']
+        }
+      },
+
+    ] // rules
+  }, // module
+
+  plugins: [
+
+    new HtmlWebpackPlugin({
+      title: 'My App',
+      template: 'src/index.html',
+      inject: false
+    })
+
+  ] // plugins
+
+};
+```
+
+The regular expression used above, `/.jsx?$/`, will match both `.js` and `.jsx`, just in case you want to use React in your app. React is beyond the scope of this document, however, and will be addressed separately.
+
+----
+
+## CSS
+
+To here, we've cut a fairly direct path. As we come to CSS, though, the terrain becomes somewhat swampy.
+
+Webpack's documentation recommends pairing `css-loader` and `style-loader`. Install them with:
+
+```sh
+$ npm install --save-dev style-loader css-loader
+```
+
+Then update the rules in our module config.
+
+```js
+  module: {
+    rules: [
+
+      { 
+        test: /\.jsx?$/, 
+        loader: 'babel-loader',
+        include: /src/,
+        options: {
+          presets: ['env']
+        }
+      },
+
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+
+    ] // rules
+  }, // module
+```
+
+As Webpack invokes loaders from right-to-left, the sequence above -- `'style-loader', 'css-loader'` -- is important. Don't swap them.
+
+Open and edit the blank `src/style.css` file created previously. Put something inside of it; anything will do. Here's something, if you need it.
+
+```css
+html {
+  background: #ffffff;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  height: 100%;
+  text-rendering: optimizelegibility;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+```
+
+Finally, because Webpack can have only a single entry point, and that's our `index.js` file, we must reference our new CSS file within it. At the very top:
+
+**src/index.js**  
+```js
+import css from './style.css';
+```
+
+On build, your CSS will be bundled into the `main.js` file. Honestly, packing the CSS into my JavaScript isn't my favorite thing, but in the interests of holding to resources from Webpack's own website, we'll run with it for now.
 
 ----
 
@@ -108,7 +291,7 @@ As written, this essentially mimics Webpack's default behavior. We'll sketch in 
 
 ```sh
 npm init
-npm install --save-dev webpack webpack-cli del-cli
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env
 ```
 
 ```sh
@@ -116,7 +299,7 @@ node_modules
 src
   index.html
   index.js
-  styling.css
+  style.css
 package-lock.json
 package.json
 ```
@@ -135,6 +318,7 @@ package.json
 
 **webpack.config.js**  
 ```js
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -143,5 +327,35 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js'
   },
-};
-```
+  
+  module: {
+    rules: [
+
+      { 
+        test: /\.jsx?$/, 
+        loader: 'babel-loader',
+        include: /src/,
+        options: {
+          presets: ['env']
+        }
+      },
+
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+
+    ] // rules
+  }, // module
+
+  plugins: [
+
+    new HtmlWebpackPlugin({
+      title: 'My App',
+      template: 'src/index.html',
+      inject: false
+    })
+
+  ] // plugins
+
+};```
