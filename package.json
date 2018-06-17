@@ -1,7 +1,7 @@
 {
   "name": "webpack-plain",
   "version": "1.0.0",
-  "description": "",
+  "description": "A no-nonsense Webpack configuration for React projects.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

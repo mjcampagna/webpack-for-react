@@ -1,4 +1,4 @@
-# Webpack for Plain JS + CSS
+# Webpack for React
 
 ## Contents
 
@@ -11,9 +11,11 @@
 
 ## Introduction
 
+This walkthrough builds on my [Webpack for Plain JS + CSS](https://github.com/mjcampagna/webpack-for-plain-js-css) configuration, and assumes familiarity with that repo and it's prerequisite, essentially making this Part III in a three-part series. Use the "prerequiste" links above to access previous parts.
+
 ## Adding React
 
-Let's add React, React DOM and Babel's React preset to our configure. From the command-line, run:
+Let's add React, React DOM and Babel's React preset to our existing configuration. From the command-line, run:
 
 ```sh
 npm install --save-dev react react-dom babel-preset-react
