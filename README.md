@@ -2,10 +2,11 @@
 
 ## Contents
 
-  - [Webpack for Plain JS](https://github.com/mjcampagna/webpack-for-plain-js)
+  - Prerequisite: [Webpack for Plain JS](https://github.com/mjcampagna/webpack-for-plain-js)
 
   - [Introduction](#introduction)
   - [Mini CSS Extract Plugin](#mini-css-extract-plugin)
+  - [Final Code](#final-code)
 
 ## Introduction
 
@@ -58,7 +59,7 @@ From the command line, set up with:
 
 ```sh
 npm init
-npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader mini-css-extract-plugin
 ```
 
 Build your file/folder structure as:
