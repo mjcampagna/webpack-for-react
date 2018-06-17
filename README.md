@@ -1,4 +1,4 @@
-# Webpack
+# Webpack "Plain"
 
 I've read a lot of articles about Webpack. The best of them are dated, now irrelevant. The rest of them are simply insane.
 
@@ -22,18 +22,27 @@ At time of writing, Webpack 4.12.0 is current. This article assumes some familia
 
 ----
 
-## First Steps
+## Walkthrough 
 
-Initialize the project folder with:
+### First Steps
+
+From the command line, initialize the project folder with:
 
 ```sh
-$ npm init
+npm init
 ```
 
 Install Webpack and its command-line interface as development dependencies with:
 
 ```sh
-$ npm install --save-dev webpack webpack-cli 
+npm install --save-dev webpack webpack-cli 
+```
+
+OR, if you'd like to pre-install everything we'll be using here with a single command, allowing you to skip the piecemeal `npm install` instructions that follow, use:
+
+```sh
+npm init
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
 ```
 
 Within the project folder, create a `src` folder, containing two files, `index.html`, `index.js` and `style.css`. At this point, your folder should look like this:
@@ -85,7 +94,7 @@ $ npm run dev
 
 ----
 
-## Creating the Configuration File
+### Creating the Configuration File
 
 Webpack 4 boldly claims to run with zero configuration. While that's not untrue, zero configuration won't get you very far. To get Webpack doing more of the things we want, we definitely want a configuration file. We might think about the configuration file as our map, a record of where we've been, and a guide for where we next expect to go.
 
@@ -108,7 +117,7 @@ As written, this essentially mimics Webpack's default behavior. We'll sketch in 
 
 ----
 
-## HTML + JS
+### HTML + JS
 
 Our configuration is coming along, so let's revisit the empty `index.html` file we created above. Open it up and paste in the following.
 
@@ -223,7 +232,7 @@ The regular expression used above, `/.jsx?$/`, will match both `.js` and `.jsx`,
 
 ----
 
-## CSS
+### CSS
 
 To here, we've cut a fairly direct path. As we come to CSS, though, the terrain becomes somewhat swampy.
 
@@ -291,7 +300,7 @@ On build, your CSS will be bundled into the `main.js` file. Honestly, packing th
 
 ----
 
-## CSS Referenced Assets
+### CSS Referenced Assets
 
 We're on our way through the swamp, but not out of the muck just yet. The work we've just done will handle our CSS code, but _will not_ handle any of the assets referenced in our CSS, including image files, fonts, etc. If we'd like to pack these items along, there's more yet to do.
 
@@ -319,7 +328,7 @@ In your configuration file, update your module rules to include the below rules 
       },
 
       {
-        test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
+        test: /\.(gif|jpeg|jpg|png|svg|webp)$/,
         use: [
           {
             loader: 'url-loader',
@@ -333,7 +342,7 @@ In your configuration file, update your module rules to include the below rules 
       },
 
       {
-        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [
           {
             loader: 'file-loader',
@@ -356,12 +365,7 @@ In both tests, we use the `include` option to isolate our rules to a specific lo
 
 ----
 
-## Final Code
-
-```sh
-npm init
-npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
-```
+### Final Code
 
 **folders & files**  
 ```sh
@@ -426,7 +430,7 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
+        test: /\.(gif|jpeg|jpg|png|svg|webp)$/,
         use: [
           {
             loader: 'url-loader',
@@ -440,7 +444,7 @@ module.exports = {
       },
 
       {
-        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: [
           {
             loader: 'file-loader',
@@ -452,7 +456,7 @@ module.exports = {
         ]
       }
 
-] // rules
+    ] // rules
   }, // module
 
   plugins: [
