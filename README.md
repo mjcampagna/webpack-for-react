@@ -10,17 +10,13 @@ First and foremost, I write this for myself, a living document that I will updat
 
 If you're coming along, then strap on your Webpack and let's start walking.
 
-----
-
 ## Usage
 
-For manual setup, follow along with the article, or copy-and-paste the final code from the end. Else, fork and clone this repo, then `npm install` as is typical.
+The walkthrough below will guide you step-by-step, with explanations. If new to Webpack and here for the first time, I advise following along to better understand the configuration.
 
-If you're here for the first time, I strongly advise reading the entire article to better understand what's here.
+Repeat visitors or those in a hurry might prefer to clone this repo, or [jump to the end of this article](#final-code) for a look at the finalized code and commands for quick setup.
 
 At time of writing, Webpack 4.12.0 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
-
-----
 
 ## Walkthrough 
 
@@ -36,13 +32,6 @@ Install Webpack and its command-line interface as development dependencies with:
 
 ```sh
 npm install --save-dev webpack webpack-cli 
-```
-
-OR, if you'd like to pre-install everything we'll be using here with a single command, allowing you to skip the piecemeal `npm install` instructions that follow, use:
-
-```sh
-npm init
-npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
 ```
 
 Within the project folder, create a `src` folder, containing two files, `index.html`, `index.js` and `style.css`. At this point, your folder should look like this:
@@ -92,8 +81,6 @@ The `prebuild` script will remove the existing `dist` folder; the `build` script
 $ npm run dev
 ```
 
-----
-
 ### Creating the Configuration File
 
 Webpack 4 boldly claims to run with zero configuration. While that's not untrue, zero configuration won't get you very far. To get Webpack doing more of the things we want, we definitely want a configuration file. We might think about the configuration file as our map, a record of where we've been, and a guide for where we next expect to go.
@@ -114,8 +101,6 @@ module.exports = {
 ```
 
 As written, this essentially mimics Webpack's default behavior. We'll sketch in more of the terrain as we travel forward. For details on what's here, see Webpack documentation for [Entry](https://webpack.js.org/concepts/#entry) and [Output](https://webpack.js.org/concepts/#output). These are core concepts you'll want to understand.
-
-----
 
 ### HTML + JS
 
@@ -230,8 +215,6 @@ module.exports = {
 
 The regular expression used above, `/.jsx?$/`, will match both `.js` and `.jsx`, just in case you want to use React in your app. React is beyond the scope of this document, however, and will be addressed separately.
 
-----
-
 ### CSS
 
 To here, we've cut a fairly direct path. As we come to CSS, though, the terrain becomes somewhat swampy.
@@ -298,8 +281,6 @@ import css from './style.css';
 
 On build, your CSS will be bundled into the `main.js` file. Honestly, packing the CSS into my JavaScript isn't my favorite thing, but in the interests of holding to resources from Webpack's own website, we'll run with it for now.
 
-----
-
 ### CSS Referenced Assets
 
 We're on our way through the swamp, but not out of the muck just yet. The work we've just done will handle our CSS code, but _will not_ handle any of the assets referenced in our CSS, including image files, fonts, etc. If we'd like to pack these items along, there's more yet to do.
@@ -365,7 +346,12 @@ In both tests, we use the `include` option to isolate our rules to a specific lo
 
 ----
 
-### Final Code
+## Final Code
+
+```sh
+npm init
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
+```
 
 **folders & files**  
 ```sh
