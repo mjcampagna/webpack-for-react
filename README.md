@@ -3,55 +3,49 @@
 ## Contents
 
   - Prerequisite: [Webpack for Plain JS](https://github.com/mjcampagna/webpack-for-plain-js)
+  - Prerequisite: [Webpack for Plain JS + CSS](https://github.com/mjcampagna/webpack-for-plain-js-css)
 
   - [Introduction](#introduction)
-  - [Mini CSS Extract Plugin](#mini-css-extract-plugin)
+  - [Adding React](#adding-react)
   - [Final Code](#final-code)
 
 ## Introduction
 
-This walkthrough builds on my [Webpack for Plain JS](https://github.com/mjcampagna/webpack-for-plain-js) configuration, and assumes familiarity with that repo.
+## Adding React
 
-Here, I'll be adding the Mini CSS Extract Plugin to that base, because I think it's lame to have my CSS inlined into JavaScript files.
-
-The reason this is a separate repo is that I want to preserve [Webpack for Plain JS](https://github.com/mjcampagna/webpack-for-plain-js) as a configuration using purely first-party loaders, plugins, etc. from Webpack's own website.
-
-## Mini CSS Extract Plugin
-
-By using the [Mini CSS Extract Plugin](https://github.com/webpack-contrib/mini-css-extract-plugin), we ensure that our CSS is built into a standalone `style.css` file, and not inlined into our JavaScript bundle. I call that a win!
-
-Install it from the command line:
+Let's add React, React DOM and Babel's React preset to our configure. From the command-line, run:
 
 ```sh
-npm install --save-dev mini-css-extract-plugin
+npm install --save-dev react react-dom babel-preset-react
 ```
 
-We then need to add three snippets to our `webpack.config.js` file to put it to work for us.
+Our base configuration is already accounting for both `.js` and `.jsx` files, using the regular expression `/.jsx?$/`. All we have to do then is add 'react' to our list of presets, allowing Babel to transpile our React code.
 
-Require the plugin at the top:
-
+**webpack.config.js**  
 ```js
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-```
+  module: {
+    rules: [
 
-Inside of `module` => `rules`, update our existing test for CSS to use the plugin:
-
-```js
-      {
-        test: /\.css$/,
-        use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
+      { 
+        test: /\.jsx?$/, 
+        loader: 'babel-loader',
+        include: /src/,
+        options: {
+          presets: ['env', 'react']
+        }
       },
+...
 ```
 
-And inside of `plugins`, instantiate it:
+Then we'll import React into Webpack's entry file.
 
+**index.js**  
 ```js
-    new MiniCssExtractPlugin({
-      filename: 'style.css'
-    })
-```
+import css from './style.css';
 
-These things done, running your build process will now yield you a `dist/style.css` file containing your CSS.
+import React from 'react';
+import ReactDOM from 'react-dom';
+```
 
 ## Final Code
 
@@ -59,7 +53,7 @@ From the command line, set up with:
 
 ```sh
 npm init
-npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader mini-css-extract-plugin
+npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader mini-css-extract-plugin react react-dom babel-preset-react
 ```
 
 Build your file/folder structure as:
@@ -85,6 +79,16 @@ Edit your `.gitignore` file to include:
 .DS_Store
 dist
 node_modules
+```
+
+Edit your `index.js` file to include: 
+
+**index.js**  
+```js
+import css from './style.css';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
 ```
 
 Replace the "scripts" section of your `package.json` file with:
@@ -124,7 +128,7 @@ module.exports = {
         loader: 'babel-loader',
         include: /src/,
         options: {
-          presets: ['env']
+          presets: ['env', 'react']
         }
       },
 
