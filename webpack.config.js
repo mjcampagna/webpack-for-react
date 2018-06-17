@@ -32,7 +32,21 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              name: '[path]/[name].[ext]'
+              name: '[path]/[name].[ext]',
+              exclude: [/fonts/]
+            }
+          }
+        ]
+      },
+
+      {
+        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path]/[name].[ext]',
+              exclude: [/images/]
             }
           }
         ]

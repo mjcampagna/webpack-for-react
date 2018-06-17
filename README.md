@@ -325,7 +325,21 @@ In your configuration file, update your module rules to include the below rule f
             loader: 'url-loader',
             options: {
               limit: 8192,
-              name: '[path]/[name].[ext]'
+              name: '[path]/[name].[ext]',
+              exclude: [/fonts/]
+            }
+          }
+        ]
+      },
+
+      {
+        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path]/[name].[ext]',
+              exclude: [/images/]
             }
           }
         ]
@@ -345,14 +359,25 @@ npm init
 npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
 ```
 
+**folders & files**  
 ```sh
-node_modules
-src
+node_modules/
+src/
+  fonts/
+  images/
+  .gitignore
   index.html
   index.js
   style.css
 package-lock.json
 package.json
+```
+
+**.gitignore**  
+```sh
+.DS_Store
+dist
+node_modules
 ```
 
 **package.json**
@@ -397,13 +422,27 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jpg|jpeg|gif)$/,
+        test: /\.(png|jpg|jpeg|gif|webp|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              name: '[path]/[name].[ext]'
+              name: '[path]/[name].[ext]',
+              exclude: [/fonts/]
+            }
+          }
+        ]
+      },
+
+      {
+        test: /\.(eot|woff|woff2|ttf|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path]/[name].[ext]',
+              exclude: [/images/]
             }
           }
         ]
