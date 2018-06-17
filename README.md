@@ -308,7 +308,7 @@ And we'll need two Webpack loaders, `file-loader` and `url-loader`.
 $ npm install --save-dev file-loader url-loader
 ```
 
-In your configuration file, update your module rules to include the below rule for images files, following the existing CSS rule.
+In your configuration file, update your module rules to include the below rules for image and font files, following the existing CSS rule.
 
 **webpack.config.js**  
 ```js
@@ -326,7 +326,7 @@ In your configuration file, update your module rules to include the below rule f
             options: {
               limit: 8192,
               name: '[path]/[name].[ext]',
-              exclude: [/fonts/]
+              include: [/images/]
             }
           }
         ]
@@ -339,7 +339,7 @@ In your configuration file, update your module rules to include the below rule f
             loader: 'file-loader',
             options: {
               name: '[path]/[name].[ext]',
-              exclude: [/images/]
+              include: [/fonts/]
             }
           }
         ]
@@ -348,7 +348,11 @@ In your configuration file, update your module rules to include the below rule f
     ] // rules
 ```
 
-The loader `url-loader` will inline images smaller than the set limit as base64 strings; images larger than the limit will fall back to `file-loader` by default, and will be moved to `dist` folder in accordance with the 'name' option. As written above, we keep the existing file name, and drop the images into `dist/images`.
+Testing for images, the loader `url-loader` will inline images smaller than the set limit as base64 strings. Images larger than the limit will fall back to `file-loader` by default, and will be moved to `dist` folder in accordance with the 'name' option. As written above, we keep the existing file name, and drop the images into `dist/images`.
+
+Testing for fonts, the loader `file-loader` will move our font files to `dist/fonts`.
+
+In both tests, we use the `include` option to isolate our rules to a specific location. For example, this prevents our font rules being applied to SVG images in our `images` folder, and our images rules being applied to SVG fonts in our `fonts` folder.
 
 ----
 
@@ -429,7 +433,7 @@ module.exports = {
             options: {
               limit: 8192,
               name: '[path]/[name].[ext]',
-              exclude: [/fonts/]
+              include: [/images/]
             }
           }
         ]
@@ -442,7 +446,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[path]/[name].[ext]',
-              exclude: [/images/]
+              include: [/fonts/]
             }
           }
         ]
