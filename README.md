@@ -185,5 +185,3 @@ module.exports = {
 
 };
 ```
-
-For now, minimizing the CSS is outside the scope of this article. For information on minimizing your code, see [Mini CSS Extract Plugin, Minimizing for Production](https://github.com/webpack-contrib/mini-css-extract-plugin#minimizing-for-production).
