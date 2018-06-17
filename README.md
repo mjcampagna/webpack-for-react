@@ -6,6 +6,11 @@
   - [Usage](#usage)
   - [Walkthrough](#walkthrough)
     - [First Steps](#first-steps)
+    - [Creating the Configuration File](#creating-the-configuration-file)
+    - [HTML + JS](#html--js)
+    - [CSS](#css)
+    - [CSS Referenced Assets](#css-referenced-assets)
+  - [Final Code](#final-code)
 
 ## Introduction
 
