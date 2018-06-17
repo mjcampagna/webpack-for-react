@@ -83,9 +83,9 @@ dist
 node_modules
 ```
 
-Edit your `index.js` file to include: 
+Edit your `src/index.js` file to include: 
 
-**index.js**  
+**src/index.js**  
 ```js
 import css from './style.css';
 
