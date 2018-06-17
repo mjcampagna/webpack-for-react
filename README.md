@@ -181,7 +181,7 @@ module.exports = {
       filename: 'style.css'
     })
 
-] // plugins
+  ] // plugins
 
 };
 ```
