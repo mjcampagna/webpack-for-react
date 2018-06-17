@@ -1,5 +1,14 @@
 # Webpack "Plain"
 
+## Contents
+
+  - [Introduction](#introduction)
+  - [Usage](#usage)
+  - [Walkthrough](#walkthrough)
+    - [First Steps](#first-steps)
+
+## Introduction
+
 I've read a lot of articles about Webpack. The best of them are dated, now irrelevant. The rest of them are simply insane.
 
 I am recently come to Webpack, and it frustrated me at first. In most reading, the author steers one into brambles, then gives band-aids to dress the wounds. There's a thing called tech debt, and the answer to most problems is not to install still more npm modules; better to avoid the pitfalls in the first place.
@@ -348,10 +357,14 @@ In both tests, we use the `include` option to isolate our rules to a specific lo
 
 ## Final Code
 
+From the command line, set up with:
+
 ```sh
 npm init
 npm install --save-dev webpack webpack-cli del-cli html-webpack-plugin babel-core babel-loader babel-preset-env style-loader css-loader file-loader url-loader
 ```
+
+Build your file/folder structure as:
 
 **folders & files**  
 ```sh
@@ -367,12 +380,16 @@ package-lock.json
 package.json
 ```
 
+Edit your `.gitignore` file to include: 
+
 **.gitignore**  
 ```sh
 .DS_Store
 dist
 node_modules
 ```
+
+Replace the "scripts" section of your `package.json` file with:
 
 **package.json**
 ```js
@@ -385,6 +402,8 @@ node_modules
   },
 ...
 ```
+
+Create a file `webpack.config.js` with these contents:
 
 **webpack.config.js**  
 ```js
