@@ -1,4 +1,4 @@
-# Webpack "Plain"
+# Webpack for Plain JS
 
 ## Contents
 
