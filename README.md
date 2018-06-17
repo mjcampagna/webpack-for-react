@@ -2,18 +2,15 @@
 
 ## Contents
 
-**Part I**
   - [Introduction](#introduction)
   - [Usage](#usage)
-  - [Part I, Walkthrough](#part-i-walkthrough)
+  - [Walkthrough](#walkthrough)
     - [First Steps](#first-steps)
     - [Creating the Configuration File](#creating-the-configuration-file)
     - [HTML + JS](#html--js)
     - [CSS](#css)
     - [CSS Referenced Assets](#css-referenced-assets)
-  - [Part I, Final Code](#part-i-final-code)
-
-**Part II**
+  - [Final Code](#final-code)
 
 ## Introduction
 
@@ -35,7 +32,7 @@ Repeat visitors or those in a hurry might prefer to clone this repo, or [jump to
 
 At time of writing, Webpack 4.12.0 is current. This article assumes some familiarity with [Node.js](https://nodejs.org/) and npm, and with setting up a new project folder or repository.
 
-## Part I, Walkthrough 
+## Walkthrough 
 
 ### First Steps
 
@@ -363,7 +360,7 @@ In both tests, we use the `include` option to isolate our rules to a specific lo
 
 ----
 
-## Part I, Final Code
+## Final Code
 
 Here is our finalized code and setup, including everything above and relying entirely on first-party loaders and plugins from the Webpack website.
 
